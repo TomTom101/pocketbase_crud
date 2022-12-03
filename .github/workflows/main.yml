@@ -26,7 +26,7 @@ jobs:
         run: |
           flutter config --no-analytics
           flutter pub get
-          flutter build web --release --dart-define SSL=true --dart-define PB_HOST=birdskills.fly.dev --dart-define PB_PORT=80
+          flutter build web --release --dart-define SSL=true --dart-define PB_HOST=birdskills.fly.dev --dart-define PB_PORT=443
       - name: Zip release files
         run: |
           zip -r ${{ github.event.repository.name }}.zip ./build
