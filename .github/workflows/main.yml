@@ -38,4 +38,4 @@ jobs:
           files: ${{ github.event.repository.name }}.zip
       - name: Deploy to fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
-        run: flyctl deploy --remote-only
+      - run: flyctl deploy --remote-only
