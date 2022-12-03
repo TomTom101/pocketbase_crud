@@ -15,4 +15,12 @@ jobs:
           cache: true
       - run: flutter pub get
       # - run: flutter test
-      - run: flutter build web --dart-define SSL=false --dart-define PB_HOST=localhost --dart-define PB_PORT=8090
+      - run: |
+          flutter build web --release --dart-define SSL=false --dart-define PB_HOST=localhost --dart-define PB_PORT=8090
+          ls -al
+          ls -al ../
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: web
+          path: build/web/
