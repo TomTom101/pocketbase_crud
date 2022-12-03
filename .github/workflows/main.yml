@@ -34,7 +34,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body: "This release tagged ${{ RELEASE_VERSION }} was automatically created by the GitHub Action workflow **${{ github.workflow }}**."
+          body: "This release tagged $RELEASE_VERSION was automatically created by the GitHub Action workflow **${{ github.workflow }}**."
           files: |
             server/backend_linux
             build/*
