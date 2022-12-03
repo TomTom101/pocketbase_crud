@@ -5,19 +5,27 @@ import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'feature_home/views/home_page.dart';
+import 'feature_skills/views/home_page.dart';
 import 'feature_skills/views/skills_page.dart';
 import 'feature_skills/views/skillset_page.dart';
 import 'router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final sharedPreferences = await SharedPreferences.getInstance();
   setPathUrlStrategy();
+
+  final sharedPreferences = await SharedPreferences.getInstance();
+  const pbProtocol =
+      bool.fromEnvironment('SSL', defaultValue: false) ? 'https' : 'http';
+  const pbHost = String.fromEnvironment('PB_HOST', defaultValue: 'localhost');
+  const pbPort = String.fromEnvironment('PB_PORT', defaultValue: '8090');
+  final pocketBase = PocketBase('$pbProtocol://$pbHost:$pbPort');
+
   runApp(
     ProviderScope(
       overrides: [
-        sharedPreferencesProvider.overrideWithValue(sharedPreferences)
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+        pocketBaseProvider.overrideWithValue(pocketBase),
       ],
       child: MyApp(),
     ),
