@@ -4,8 +4,10 @@ RUN apk add --no-cache \
     unzip \
     ca-certificates 
 
-RUN wget https://github.com/TomTom101/pocketbase_crud/releases/latest/download/pocketbase_crud.zip -O tmp.zip \
-    && unzip tmp.zip
+# RUN wget https://github.com/TomTom101/pocketbase_crud/releases/latest/download/pocketbase_crud.zip -O tmp.zip \
+#     && unzip tmp.zip
+ADD https://github.com/TomTom101/pocketbase_crud/releases/latest/download/pocketbase_crud.zip /
+RUN unzip pocketbase_crud.zip
 
 EXPOSE 8090
 
