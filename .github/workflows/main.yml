@@ -24,12 +24,12 @@ jobs:
           flutter config --no-analytics
           flutter pub get
           flutter build web --release --dart-define SSL=false --dart-define PB_HOST=localhost --dart-define PB_PORT=8090
-      - name: Zip Build folder
-        run: zip -r ${{ github.event.repository.name }}.zip ./build
-      - name: Add server to Zip
-        run:  zip -u ${{ github.event.repository.name }}.zip server/backend_linux
+      - name: Zip release files
+        run: |
+          zip -r ${{ github.event.repository.name }}.zip ./build
+          zip -u ${{ github.event.repository.name }}.zip server/backend_linux
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body: This release tagged ${GITHUB_REF:10} was automatically created by the GitHub Action workflow **${{ github.workflow }}**.
+          body: This release was automatically created by the **${{ github.workflow }}** workflow.
           files: ${{ github.event.repository.name }}.zip
