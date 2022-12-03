@@ -41,13 +41,15 @@ dependencies:
   go_router: ^5.0.5
   flutter_form_builder: ^7.7.0
   form_builder_extra_fields:
-    path: ../form_builder_extra_fields
+    # path: ../form_builder_extra_fields
+    git:
+      url: https://github.com/TomTom101/form_builder_extra_fields.git
   form_builder_validators: ^8.3.0
   another_xlider: ^1.1.2
   pocketbase_scaffold:
+    # path: ../pocketbase_scaffold
     git:
       url: https://github.com/TomTom101/pocketbase_scaffold.git
-    # path: ../pocketbase_scaffold
 
 dev_dependencies:
   flutter_test:

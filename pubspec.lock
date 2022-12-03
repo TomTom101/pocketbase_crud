@@ -165,9 +165,11 @@ packages:
   dropdown_search:
     dependency: transitive
     description:
-      name: dropdown_search
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "818c63b08fe4ce764c4ea8f851483d5b05f135c8"
+      url: "https://github.com/TomTom101/searchable_dropdown.git"
+    source: git
     version: "5.0.3"
   fake_async:
     dependency: transitive
@@ -332,9 +334,11 @@ packages:
   form_builder_extra_fields:
     dependency: "direct main"
     description:
-      path: "../form_builder_extra_fields"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "368e6d217e95728fc3062f14dedbefde1c3745d3"
+      url: "https://github.com/TomTom101/form_builder_extra_fields.git"
+    source: git
     version: "8.4.0"
   form_builder_validators:
     dependency: "direct main"
