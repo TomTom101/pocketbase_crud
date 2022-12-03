@@ -10,6 +10,9 @@ on:
       - '**'
   workflow_dispatch: 
 
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 jobs:
   build-flutter-web:
     runs-on: ubuntu-latest
@@ -28,8 +31,11 @@ jobs:
         run: |
           zip -r ${{ github.event.repository.name }}.zip ./build
           zip -u ${{ github.event.repository.name }}.zip server/backend_linux
-      - name: Release
+      - name: Bundle Release
         uses: softprops/action-gh-release@v1
         with:
           body: This release was automatically created by the **${{ github.workflow }}** workflow.
           files: ${{ github.event.repository.name }}.zip
+      - name: Deploy to fly.io
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        run: flyctl deploy --remote-only
