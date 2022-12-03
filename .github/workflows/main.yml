@@ -2,13 +2,21 @@ name: Create Flutter release
 
 # run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 
-on: [push, workflow_dispatch]
+# on: [push, workflow_dispatch]
+
+on:
+  push:
+    tags:        
+      - '*'
+  workflow_dispatch: 
 
 jobs:
   build-flutter-web:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set Release version
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -26,7 +34,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body: "This release was automatically created by the GitHub Action workflow **${{ github.workflow }}**."
+          body: "This release tagged ${{ RELEASE_VERSION }} was automatically created by the GitHub Action workflow **${{ github.workflow }}**."
           files: |
             server/backend_linux
             build/*
