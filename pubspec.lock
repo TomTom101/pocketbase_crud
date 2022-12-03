@@ -570,9 +570,11 @@ packages:
   pocketbase_scaffold:
     dependency: "direct main"
     description:
-      path: "../pocketbase_scaffold"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: a8a33f059a1054f47518f2ce97fd24b74f5da54b
+      url: "https://github.com/TomTom101/pocketbase_scaffold.git"
+    source: git
     version: "0.0.1"
   pointycastle:
     dependency: transitive
