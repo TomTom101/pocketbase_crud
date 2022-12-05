@@ -26,10 +26,12 @@ jobs:
         run: |
           flutter config --no-analytics
           flutter pub get
+          flutter pub upgrade pocketbase_scaffold 
           flutter build web --release --dart-define SSL=true --dart-define PB_HOST=birdskills.fly.dev --dart-define PB_PORT=443
       - name: Zip release files
         run: |
           zip -r ${{ github.event.repository.name }}.zip ./build
+          zip -u ${{ github.event.repository.name }}.zip ./assets
           zip -u ${{ github.event.repository.name }}.zip server/backend_linux
       - name: Bundle Release
         uses: softprops/action-gh-release@v1

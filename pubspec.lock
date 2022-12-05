@@ -590,10 +590,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "2a51cd582c26c0e2a85c797457e9a2887c64a5c7"
+      resolved-ref: cebd7384ad1a0cb706b43bc456a77009a15afa8b
       url: "https://github.com/TomTom101/pocketbase_scaffold.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   pointycastle:
     dependency: transitive
     description:
