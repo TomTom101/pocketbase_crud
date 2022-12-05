@@ -21,7 +21,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          cache: false
+          cache: true
       - name: Build
         run: |
           flutter config --no-analytics
