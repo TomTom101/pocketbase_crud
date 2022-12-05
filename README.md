@@ -1,16 +1,25 @@
-# pocketbase_crud
+# Birdskills
 
-A new Flutter project.
+A new Bird project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+# Build
+## Creating a PocketBase Linux build on Mac
+`env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o backend_linux`
 
-A few resources to get you started if this is your first Flutter project:
+## Build Flutter
+Set backend host and port in `lib/main.dart`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+`flutter build web --dart-define SSL=false --dart-define PB_HOST=localhost --dart-define PB_PORT=8090 --web-port=8081`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Or run 
+`flutter run --release --dart-define SSL=false --dart-define PB_HOST=localhost --dart-define PB_PORT=8090 --web-port=8081`
+
+## Build Docker image
+`docker build --rm -t pocketbase_birdskills ./`
+
+# Run
+
+`sudo docker run -p 8081:8090 pocketbase_birdskills`
+`http://localhost:8081/`

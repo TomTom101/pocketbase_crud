@@ -40,7 +40,7 @@ class AppScaffoldWidget extends ConsumerWidget {
         children: [
           NavigationRail(
             onDestinationSelected: onDestinationSelected,
-            leading: Image.asset("BOM_icon_orange.png", width: 55),
+            leading: Image.asset("assets/BOM_icon_orange.png", width: 55),
             selectedIndex: pageIndex,
             // labelType: NavigationRailLabelType.selected,
             elevation: 4,

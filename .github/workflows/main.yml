@@ -31,7 +31,6 @@ jobs:
       - name: Zip release files
         run: |
           zip -r ${{ github.event.repository.name }}.zip ./build
-          zip -ur ${{ github.event.repository.name }}.zip ./assets
           zip -u ${{ github.event.repository.name }}.zip server/backend_linux
       - name: Bundle Release
         uses: softprops/action-gh-release@v1
