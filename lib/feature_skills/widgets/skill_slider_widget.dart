@@ -4,15 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/proficiency_model.dart';
 
-// final levelProvider = StateProvider<double>((ref) => 0.0);
-final draggedProficiencyProvider = StateProvider<String>((ref) => '');
-final currentProficiencyLevelProvider = StateProvider<double?>((ref) => null);
-
 class ProficiencySlider extends ConsumerStatefulWidget {
   const ProficiencySlider(
     this.proficiency, {
     required this.readOnly,
     required this.onChange,
+    required this.onDragging,
     this.color = const Color(0xff2196F3),
     Key? key,
   }) : super(key: key);
@@ -21,6 +18,7 @@ class ProficiencySlider extends ConsumerStatefulWidget {
   final bool readOnly;
   final Color color;
   final Function(Proficiency) onChange;
+  final Function(double level) onDragging;
 
   @override
   ConsumerState<ProficiencySlider> createState() => _ProficiencySliderState();
@@ -53,13 +51,11 @@ class _ProficiencySliderState extends ConsumerState<ProficiencySlider> {
   onDragStarted(i, l, h) {
     if (widget.readOnly) return;
     setState(() => isActive = !isActive);
-    ref.read(draggedProficiencyProvider.notifier).state =
-        widget.proficiency.id ?? '';
   }
 
   onDragging(i, l, h) {
-    ref.read(currentProficiencyLevelProvider.notifier).state = l;
     setState(() => level = l);
+    widget.onDragging(l);
   }
 
   onDragCompleted(_, l, __) {

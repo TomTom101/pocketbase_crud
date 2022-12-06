@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
@@ -42,7 +40,6 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // final user = ref.watch(authProvider.notifier).me;
     Future<AsyncValue<RecordModel>> addProficiency(
       User user,
       Map<String, dynamic>? data,
@@ -50,9 +47,6 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
         ref
             .read(proficiencyRepositoryProvider.notifier)
             .create(Proficiency(user: user, skill: data?['skill'], level: 5));
-
-    // double sizedBoxWidth = max(widget.skillSet.proficiencies.length, 3.0) *
-    //     SkillSetWidget.widthPerSlider;
 
     return Card(
       elevation: 5,
@@ -128,7 +122,7 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
   }
 }
 
-class ProficiencyWidget extends ConsumerWidget {
+class ProficiencyWidget extends ConsumerStatefulWidget {
   const ProficiencyWidget(
     this.proficiency, {
     this.readOnly = false,
@@ -137,6 +131,19 @@ class ProficiencyWidget extends ConsumerWidget {
 
   final Proficiency proficiency;
   final bool readOnly;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProficiencyWidgetState();
+}
+
+class _ProficiencyWidgetState extends ConsumerState<ProficiencyWidget> {
+  double? level;
+  @override
+  void initState() {
+    level = widget.proficiency.level;
+    super.initState();
+  }
 
   Widget skillName(Skill skill, {TextStyle? style}) {
     return RotatedBox(
@@ -148,15 +155,10 @@ class ProficiencyWidget extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    String activeId = ref.watch(draggedProficiencyProvider.notifier).state;
-    bool isActive = activeId == proficiency.id;
-    final currenyProficiencyLevel =
-        ref.watch(currentProficiencyLevelProvider) ?? proficiency.level;
-
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          ref.read(activeProficiencyProvider.notifier).state = proficiency,
+      onTap: () => ref.read(activeProficiencyProvider.notifier).state =
+          widget.proficiency,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 400),
         child: Column(
@@ -165,26 +167,26 @@ class ProficiencyWidget extends ConsumerWidget {
           children: [
             Expanded(
               flex: 2,
-              child: skillName(proficiency.skill),
+              child: skillName(widget.proficiency.skill),
             ),
             Flexible(
               // fit: FlexFit.tight,
-              child: levelText(
-                  isActive
-                      ? (currenyProficiencyLevel - 1).toString()
-                      : proficiency.level.round().toString(),
+              child: levelText("$level",
                   style: Theme.of(context).textTheme.headline4),
             ),
             Flexible(
               flex: 4,
               child: ProficiencySlider(
-                  readOnly: readOnly,
-                  proficiency,
+                  readOnly: widget.readOnly,
+                  widget.proficiency,
                   onChange: (Proficiency p) => ref
                       .read(proficiencyRepositoryProvider.notifier)
-                      .update(p)),
+                      .update(p),
+                  onDragging: (l) => setState(
+                        () => level = l - 1,
+                      )),
             ),
-            if (!readOnly)
+            if (!widget.readOnly)
               Flexible(
                 child: IconButton(
                     iconSize: 20,
@@ -192,7 +194,7 @@ class ProficiencyWidget extends ConsumerWidget {
                     color: Colors.grey[600],
                     onPressed: () => ref
                         .read(proficiencyRepositoryProvider.notifier)
-                        .delete(proficiency.id!)),
+                        .delete(widget.proficiency.id!)),
               )
           ],
         ),
