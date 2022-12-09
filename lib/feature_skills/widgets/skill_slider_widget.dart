@@ -25,8 +25,24 @@ class ProficiencySlider extends ConsumerStatefulWidget {
 }
 
 class _ProficiencySliderState extends ConsumerState<ProficiencySlider> {
-  double? level;
-  bool isActive = false;
+  late double? level;
+  late bool isActive;
+
+  @override
+  void initState() {
+    super.initState();
+    isActive = false;
+    level = widget.proficiency.level + 1;
+  }
+
+  @override
+  didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.proficiency.skill.name != widget.proficiency.skill.name) {
+      // The widget now holds a different proficiency, update it to the new data
+      level = widget.proficiency.level + 1;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +57,7 @@ class _ProficiencySliderState extends ConsumerState<ProficiencySlider> {
       handler: sliderHandler(),
       trackBar: sliderTrackBar(isActive),
       // fixedValues: FlutterSliderFixedValue()
-      values: [level ?? widget.proficiency.level.toDouble() + 1],
+      values: [level!],
       onDragStarted: onDragStarted,
       onDragging: onDragging,
       onDragCompleted: onDragCompleted,

@@ -37,11 +37,24 @@ final skillSetProvider = Provider<AsyncValue<List<SkillSet>>>((ref) {
   return proficiencies.whenData((items) {
     final grouped = items.groupBy((e) => e.user);
     final skillSets = <SkillSet>[];
-    grouped.forEach((user, proficiencies) =>
-        skillSets.add(SkillSet(user: user, proficiencies: proficiencies)));
+    grouped.forEach((user, proficiencies) {
+      proficiencies = tShaped(proficiencies);
+      skillSets.add(SkillSet(user: user, proficiencies: proficiencies));
+    });
     return skillSets;
   });
 });
+
+List<Proficiency> tShaped(List<Proficiency> proficiencies) {
+  // proficiencies = List.from(widget.skillSet.proficiencies);
+  proficiencies.sort((a, b) => a.level.compareTo(b.level));
+  int splitPos = (proficiencies.length - 1) ~/ 2;
+  return List.from(proficiencies.getRange(0, splitPos), growable: true)
+    ..addAll(proficiencies
+        .getRange(splitPos, proficiencies.length)
+        .toList()
+        .reversed);
+}
 
 typedef SkillRank = Map<Skill, List<Proficiency>>;
 
@@ -95,7 +108,9 @@ final groupedSkillSetProvider = Provider<AsyncValue<SkillSet>>((ref) {
     });
 
     return SkillSet(
-        user: proficiencies.first.user, proficiencies: proficiencies);
+      user: proficiencies.first.user,
+      proficiencies: tShaped(proficiencies),
+    );
   });
 });
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pocketbase_scaffold/pocketbase_scaffold.dart';
@@ -31,11 +33,27 @@ class SkillSetWidget extends ConsumerStatefulWidget {
 
 class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
   bool isEditMode = false;
+  List<Proficiency>? sortedList;
 
   @override
   void initState() {
     super.initState();
     isEditMode = widget.skillSet.proficiencies.isEmpty ? true : false;
+    // sortList();
+  }
+
+  @override
+  didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // sortList();
+  }
+
+  void sortList() {
+    // tShaped(proficiencies)
+    sortedList = List.from(widget.skillSet.proficiencies);
+    sortedList!.sort((a, b) => a.level.compareTo(b.level));
+    sortedList!.map((e) => print("${e.skill.name}: ${e.level}")).toList();
+    // sortedList!.map((e) => print("${e.skill.name}: ${e.level}")).toList();
   }
 
   @override
@@ -78,11 +96,18 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
             children: [
               if (widget.skillSet.proficiencies.isNotEmpty)
                 ...widget.skillSet.proficiencies.map(
+                  // ...sortedList!.map(
                   (Proficiency proficiency) => ProficiencyWidget(
                     proficiency,
                     readOnly: !isEditMode,
                   ),
                 ),
+              // if (widget.skillSet.proficiencies.isNotEmpty)
+              //   // ...sortedList!.map(
+              //   ...sortedList!.map(
+              //     (Proficiency proficiency) =>
+              //         Text("${proficiency.skill.name}: ${proficiency.level}"),
+              //   ),
               if (widget.skillSet.proficiencies.isEmpty) addSkillCTA(),
               if (isEditMode)
                 IconButton(
@@ -115,7 +140,13 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
   }
 
   ButtonStyleButton editButton(BuildContext context) {
-    void onPressed() => setState(() => isEditMode = !isEditMode);
+    void onPressed() {
+      setState(() {
+        // if (isEditMode) sortList();
+        isEditMode = !isEditMode;
+      });
+    }
+
     return isEditMode
         ? ElevatedButton(onPressed: onPressed, child: const Text("Done"))
         : OutlinedButton(onPressed: onPressed, child: const Text("Edit"));
@@ -123,7 +154,7 @@ class _SkillSetWidgetState extends ConsumerState<SkillSetWidget> {
 }
 
 class ProficiencyWidget extends ConsumerStatefulWidget {
-  const ProficiencyWidget(
+  ProficiencyWidget(
     this.proficiency, {
     this.readOnly = false,
     Key? key,
@@ -131,6 +162,8 @@ class ProficiencyWidget extends ConsumerStatefulWidget {
 
   final Proficiency proficiency;
   final bool readOnly;
+  final Color color =
+      Colors.primaries[Random().nextInt(Colors.primaries.length)];
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -138,11 +171,21 @@ class ProficiencyWidget extends ConsumerStatefulWidget {
 }
 
 class _ProficiencyWidgetState extends ConsumerState<ProficiencyWidget> {
-  double? level;
+  late double? level;
+
   @override
   void initState() {
     level = widget.proficiency.level;
     super.initState();
+  }
+
+  @override
+  didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // print(
+    //     "_ProficiencyWidgetState didUpdateWidget ${widget.proficiency.skill.name}: ${widget.proficiency.level}");
+
+    level = widget.proficiency.level;
   }
 
   Widget skillName(Skill skill, {TextStyle? style}) {

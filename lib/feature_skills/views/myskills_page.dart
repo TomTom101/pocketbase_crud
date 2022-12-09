@@ -19,7 +19,6 @@ class MySkillsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mySkillSet = ref.watch(mySkillSetProvider);
-
     final me = ref.watch(authProvider.notifier).me;
 
     return Scaffold(

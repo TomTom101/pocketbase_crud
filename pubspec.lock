@@ -367,7 +367,7 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "2.3.1"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -381,7 +381,7 @@ packages:
       name: frontend_server_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.0"
   glob:
     dependency: transitive
     description:
@@ -395,7 +395,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.5"
+    version: "5.2.1"
   graphs:
     dependency: transitive
     description:
@@ -507,7 +507,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   package_config:
     dependency: transitive
     description:
@@ -892,7 +892,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   xdg_directories:
     dependency: transitive
     description:
